@@ -1,38 +1,40 @@
-# create-svelte
+![](assets/20230406_001328_agents.png)
 
-Everything you need to build a Svelte project, powered by [`create-svelte`](https://github.com/sveltejs/kit/tree/master/packages/create-svelte).
+# The Agents
 
-## Creating a project
+Yet another ChatGPT UI, but more fit and svelte.
 
-If you're seeing this, you've probably already done this step. Congrats!
+Backend/Frontend Sveltekit app to have multiple conversations with chatbots. It connects to the OpenAI API.
 
-```bash
-# create a new project in the current directory
-npm create svelte@latest
+# Techstack
 
-# create a new project in my-app
-npm create svelte@latest my-app
-```
+- [Sveltekit](https://kit.svelte.dev/https:/)
+- [Skeleton](https://www.skeleton.dev/https:/)
+- [Prisma](https://www.prisma.io/)
+- [OpenAI API](https://openai.com/producthttps:/)
 
-## Developing
+# Features
 
-Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
+- [x] Open source
+- [x] Deploy in your own server
+- [x] Safely store your API Key in the server
+- [x] You can also run the server locally in your machine
+- [x] Configurable amount of messages to send
+- [x] Configurable system message to guide the assistant
+- [x] Start agents with predefined system message and prompt templates
+- [x] Save all the messages in your database, continue your conversations later
+- [x] Save the system message and prompt templates of conversations in the database
+- [x] By default uses sqlite, but you can easily change the database to whatever you want, just code it
+- [x] Prompt templates: Speed up your questions with predefined templates
+- [x] Prompt template parameters: Add parameters to the template and change them easily for your needs.
+- [ ] Streaming messages
+- [ ] Edit messages
+- [ ] Create images with Dall-e
+- [ ] Voice input
+- [ ] Voice answers
+- [ ] Share conversations
+- [ ] Plugins
 
-```bash
-npm run dev
+# Setup
 
-# or start the server and open the app in a new browser tab
-npm run dev -- --open
-```
-
-## Building
-
-To create a production version of your app:
-
-```bash
-npm run build
-```
-
-You can preview the production build with `npm run preview`.
-
-> To deploy your app, you may need to install an [adapter](https://kit.svelte.dev/docs/adapters) for your target environment.
+# Run
