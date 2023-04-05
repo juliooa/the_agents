@@ -3,6 +3,7 @@
 	import '@skeletonlabs/skeleton/styles/all.css';
 	import '../app.postcss';
 
+	import 'iconify-icon';
 	import { AppBar, AppShell } from '@skeletonlabs/skeleton';
 	import 'highlight.js/styles/github-dark.css';
 	import { setInitialClassState } from '@skeletonlabs/skeleton';
@@ -12,6 +13,8 @@
 	import { storePopup } from '@skeletonlabs/skeleton';
 	storePopup.set({ computePosition, autoUpdate, flip, shift, offset, arrow });
 	storeHighlightJs.set(hljs);
+
+	let githubLogo = 'github-mark-white.png';
 </script>
 
 <svelte:head>{@html `<script>(${setInitialClassState.toString()})();</script>`}</svelte:head>
@@ -20,7 +23,11 @@
 	<svelte:fragment slot="pageHeader">
 		<AppBar>
 			<svelte:fragment slot="lead"><h2>The Agents</h2></svelte:fragment>
-			<svelte:fragment slot="trail">github repo</svelte:fragment>
+			<svelte:fragment slot="trail"
+				><a href="https://github.com/juliooa/the_agents">
+					<img width="32" src={githubLogo} alt="github logo" />
+				</a></svelte:fragment
+			>
 		</AppBar>
 	</svelte:fragment>
 	<slot />
