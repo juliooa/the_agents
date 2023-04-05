@@ -6,7 +6,7 @@
 	import 'iconify-icon';
 	import { AppBar, AppShell } from '@skeletonlabs/skeleton';
 	import 'highlight.js/styles/github-dark.css';
-	import { setInitialClassState } from '@skeletonlabs/skeleton';
+
 	import hljs from 'highlight.js';
 	import { storeHighlightJs } from '@skeletonlabs/skeleton';
 	import { computePosition, autoUpdate, flip, shift, offset, arrow } from '@floating-ui/dom';
@@ -17,8 +17,6 @@
 	let githubLogo = 'github-mark-white.png';
 	let theAgentsImg = 'agents_small.png';
 </script>
-
-<svelte:head>{@html `<script>(${setInitialClassState.toString()})();</script>`}</svelte:head>
 
 <AppShell>
 	<svelte:fragment slot="pageHeader">
