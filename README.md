@@ -1,4 +1,5 @@
-![](static/agents.png)
+
+![agents](https://user-images.githubusercontent.com/1221345/230161421-85f95bc3-28c6-4c57-a02d-75e23f6b4d8d.png)
 
 # The Agents
 
