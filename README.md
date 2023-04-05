@@ -1,10 +1,19 @@
-![](assets/20230406_001328_agents.png)
+![](static/agents.png)
 
 # The Agents
 
 Yet another ChatGPT UI, but more fit and svelte.
 
 Backend/Frontend Sveltekit app to have multiple conversations with chatbots. It connects to the OpenAI API.
+
+<img width="1728" alt="Screen Shot 2023-04-06 at 00 36 43" src="https://user-images.githubusercontent.com/1221345/230160377-284624cd-f71b-4662-b3bf-d9cad3339c44.png">
+
+<img width="1728" alt="Screen Shot 2023-04-06 at 00 36 14" src="https://user-images.githubusercontent.com/1221345/230160641-824b4cb4-4175-4733-8532-8e0819855aea.png">
+
+<img width="1728" alt="Screen Shot 2023-04-06 at 00 36 23" src="https://user-images.githubusercontent.com/1221345/230160666-6b7e4a1c-b821-47a9-b68e-68c907df9e6d.png">
+
+<img width="1728" alt="Screen Shot 2023-04-06 at 00 36 32" src="https://user-images.githubusercontent.com/1221345/230160694-0a5dd987-3c10-4f78-8f1c-deea5bb9ac18.png">
+
 
 # Techstack
 
