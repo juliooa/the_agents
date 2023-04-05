@@ -15,6 +15,7 @@
 	storeHighlightJs.set(hljs);
 
 	let githubLogo = 'github-mark-white.png';
+	let theAgentsImg = 'agents_small.png';
 </script>
 
 <svelte:head>{@html `<script>(${setInitialClassState.toString()})();</script>`}</svelte:head>
@@ -22,7 +23,10 @@
 <AppShell>
 	<svelte:fragment slot="pageHeader">
 		<AppBar>
-			<svelte:fragment slot="lead"><h2>The Agents</h2></svelte:fragment>
+			<svelte:fragment slot="lead"
+				><img class="rounded-full mr-2" width="60" src={theAgentsImg} alt="github logo" />
+				<h2>The Agents</h2></svelte:fragment
+			>
 			<svelte:fragment slot="trail"
 				><a href="https://github.com/juliooa/the_agents">
 					<img width="32" src={githubLogo} alt="github logo" />
