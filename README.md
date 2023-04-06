@@ -33,6 +33,7 @@ Backend/Frontend Sveltekit app to have multiple conversations with chatbots. It 
 - [ ] Voice input
 - [ ] Voice answers
 - [ ] Share conversations
+- [ ] Upload your own documents
 - [ ] Plugins
 
 # Setup
