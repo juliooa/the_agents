@@ -3,6 +3,10 @@
 	import '@skeletonlabs/skeleton/styles/all.css';
 	import '../app.postcss';
 
+	import { invalidate } from '$app/navigation';
+	import { onMount } from 'svelte';
+	import type { LayoutData } from './$types';
+
 	import 'iconify-icon';
 	import { AppBar, AppShell } from '@skeletonlabs/skeleton';
 	import 'highlight.js/styles/github-dark.css';
@@ -16,6 +20,22 @@
 
 	let githubLogo = 'github-mark-white.png';
 	let theAgentsImg = 'agents_small.png';
+
+	export let data: LayoutData;
+
+	$: ({ supabase, session } = data);
+
+	onMount(() => {
+		const {
+			data: { subscription }
+		} = supabase.auth.onAuthStateChange((event, _session) => {
+			if (_session?.expires_at !== session?.expires_at) {
+				invalidate('supabase:auth');
+			}
+		});
+
+		return () => subscription.unsubscribe();
+	});
 </script>
 
 <AppShell>
