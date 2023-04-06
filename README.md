@@ -1,4 +1,3 @@
-
 ![agents](https://user-images.githubusercontent.com/1221345/230161421-85f95bc3-28c6-4c57-a02d-75e23f6b4d8d.png)
 
 # The Agents
@@ -37,17 +36,19 @@ Backend/Frontend Sveltekit app to have multiple conversations with chatbots. It 
 - [ ] Plugins
 
 # Setup
+
 - Create a `.env` file with your OpenAI Api key, and the name of the prisma database, see `.env.example`. Your file should look like this:
+
 ```
 SECRET_OPENAI_API_KEY="sk-XXXXXXXX"
 DATABASE_URL="file:./database_name.db"
 ```
-- `> npm install`
-- `npx prisma db push` to start the database and apply the schema
+
+- `npm install`
+- `npx prisma migrate dev` to start the database and apply the schema
 - `npm run dev` to execute
 
 # Screenshots
-
 
 <img width="1728" alt="Screen Shot 2023-04-06 at 00 36 43" src="https://user-images.githubusercontent.com/1221345/230160377-284624cd-f71b-4662-b3bf-d9cad3339c44.png">
 
