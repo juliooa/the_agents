@@ -2,7 +2,7 @@
 
 # The Agents
 
-Yet another ChatGPT UI, but more fit and svelte.
+Yet another ChatGPT UI, but more fit and svelte, and with a secure backend.
 
 Backend/Frontend Sveltekit app to have multiple conversations with chatbots. It connects to the OpenAI API.
 
@@ -49,6 +49,12 @@ DATABASE_URL="file:./database_name.db"
 - `npx prisma migrate dev` to start the database and apply the schema
 - `npm run dev` to execute
 
+# Deploy
+
+If you want to deploy in your own server, don't forget to add the environment variables.
+
+For serverless(e.g. Vercel) you can use Supabase as database, check the [supabase_db](https://github.com/juliooa/the_agents/tree/supabase_db) branch, and [this](https://supabase.com/docs/guides/integrations/prisma) documentation.
+
 # Screenshots
 
 <img width="1728" alt="Screen Shot 2023-04-06 at 00 36 43" src="https://user-images.githubusercontent.com/1221345/230160377-284624cd-f71b-4662-b3bf-d9cad3339c44.png">
@@ -58,3 +64,7 @@ DATABASE_URL="file:./database_name.db"
 <img width="1728" alt="Screen Shot 2023-04-06 at 00 36 23" src="https://user-images.githubusercontent.com/1221345/230160666-6b7e4a1c-b821-47a9-b68e-68c907df9e6d.png">
 
 <img width="1728" alt="Screen Shot 2023-04-06 at 00 36 32" src="https://user-images.githubusercontent.com/1221345/230160694-0a5dd987-3c10-4f78-8f1c-deea5bb9ac18.png">
+
+# Contact
+
+Hi! you can find me here [@julioandresdev](https://twitter.com/julioandresdev)
