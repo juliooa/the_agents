@@ -6,8 +6,9 @@ generator client {
 }
 
 datasource db {
-  provider = "sqlite"
-  url      = env("DATABASE_URL")
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
 }
 
 model Conversation {
@@ -16,17 +17,19 @@ model Conversation {
   systemMessage  String
   promptTemplate String
   model          String
+  userId         String
   archived       Boolean   @default(false)
   messages       Message[]
 }
 
 model Message {
-  id             Int           @id @default(autoincrement())
+  id             Int          @id @default(autoincrement())
   text           String
   role           String
   imageUrl       String?
   type           String
   name           String?
-  Conversation   Conversation? @relation(fields: [conversationId], references: [id])
   conversationId Int
+  userId         String
+  Conversation   Conversation @relation(fields: [conversationId], references: [id])
 }

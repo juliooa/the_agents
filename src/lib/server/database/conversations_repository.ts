@@ -9,7 +9,8 @@ export interface ConversationsRepository {
 		name: string,
 		systemMessage: string,
 		promptTemplate: string,
-		model: string
+		model: string,
+		userId: string
 	): Promise<Conversation>;
 	archiveConversation(conversationId: number): Promise<Conversation>;
 }

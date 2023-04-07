@@ -37,7 +37,6 @@
 				let routeToMove = moveToConversation
 					? `?selectedConversationId=${moveToConversation.id}`
 					: '?showNewAgentTab=true';
-				console.log('routeToMove', routeToMove);
 				routeToPage(routeToMove);
 			}
 		} catch (error) {

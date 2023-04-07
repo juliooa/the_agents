@@ -1,6 +1,8 @@
 <script lang="ts">
-	import { applyAction, enhance, type SubmitFunction } from '$app/forms';
 	import type { ActionData } from './$types';
+	import { applyAction, enhance, type SubmitFunction } from '$app/forms';
+	import { goto, invalidate } from '$app/navigation';
+	import { redirect } from '@sveltejs/kit';
 
 	export let form: ActionData;
 	let loading = false;
@@ -8,7 +10,12 @@
 	const handleSubmit: SubmitFunction = () => {
 		loading = true;
 		return async ({ result }) => {
-			await applyAction(result);
+			if (result.type === 'redirect') {
+				await invalidate('supabase:auth');
+				goto(result.location);
+			} else {
+				await applyAction(result);
+			}
 			loading = false;
 		};
 	};
@@ -16,13 +23,7 @@
 
 <div class="flex justify-center align-middle h-full">
 	<div class="container w-96 mt-16">
-		<h1 class="mb-6">Sign up</h1>
-		{#if form?.error}
-			<div class="block notification is-danger">{form.error}</div>
-		{/if}
-		{#if form?.message}
-			<div class="block notification is-primary">{form.message}</div>
-		{/if}
+		<h1 class="mb-6">Sign in</h1>
 		{#if form?.error}
 			<div class="">{form.error}</div>
 		{/if}
@@ -53,13 +54,13 @@
 			</label>
 
 			<div class="flex flex-row justify-end mt-3">
-				<button disabled={loading} type="submit" class="btn variant-filled-primary">Sign up</button>
+				<button disabled={loading} type="submit" class="btn variant-filled-primary">Sign in</button>
 			</div>
 		</form>
 
 		<div class="mt-6">
 			<p class="has-text-centered">
-				Already have an account? <a href="/">Sign in</a>
+				Don't have an account? <a href="/signup">Sign up</a>
 			</p>
 		</div>
 	</div>

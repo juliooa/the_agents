@@ -3,7 +3,7 @@
 	import '@skeletonlabs/skeleton/styles/all.css';
 	import '../app.postcss';
 
-	import { invalidate } from '$app/navigation';
+	import { goto, invalidate } from '$app/navigation';
 	import { onMount } from 'svelte';
 	import type { LayoutData } from './$types';
 
@@ -15,6 +15,7 @@
 	import { storeHighlightJs } from '@skeletonlabs/skeleton';
 	import { computePosition, autoUpdate, flip, shift, offset, arrow } from '@floating-ui/dom';
 	import { storePopup } from '@skeletonlabs/skeleton';
+	import { applyAction, enhance, type SubmitFunction } from '$app/forms';
 	storePopup.set({ computePosition, autoUpdate, flip, shift, offset, arrow });
 	storeHighlightJs.set(hljs);
 
@@ -22,6 +23,7 @@
 	let theAgentsImg = 'agents_small.png';
 
 	export let data: LayoutData;
+	let loading = false;
 
 	$: ({ supabase, session } = data);
 
@@ -36,6 +38,19 @@
 
 		return () => subscription.unsubscribe();
 	});
+
+	const handleLogout: SubmitFunction = () => {
+		loading = true;
+		return async ({ result }) => {
+			if (result.type === 'redirect') {
+				await invalidate('supabase:auth');
+				goto(result.location);
+			} else {
+				await applyAction(result);
+			}
+			loading = false;
+		};
+	};
 </script>
 
 <AppShell>
@@ -45,12 +60,23 @@
 				><img class="rounded-full mr-2" width="60" src={theAgentsImg} alt="github logo" />
 				<h2>The Agents</h2></svelte:fragment
 			>
-			<svelte:fragment slot="trail"
-				><a href="https://github.com/juliooa/the_agents">
-					<img width="32" src={githubLogo} alt="github logo" />
-				</a></svelte:fragment
+			<svelte:fragment slot="trail">
+				{#if data.session}
+					<form action="/logout" method="post" use:enhance={handleLogout}>
+						<button class="btn variant-filled-surface" disabled={loading} type="submit">
+							<iconify-icon icon="icons8:shutdown" />
+						</button>
+					</form>
+				{/if}</svelte:fragment
 			>
 		</AppBar>
 	</svelte:fragment>
 	<slot />
+	<svelte:fragment slot="pageFooter"
+		><div class="flex flex-row ml-4 mb-4">
+			<a class="" href="https://github.com/juliooa/the_agents">
+				<img width="32" src={githubLogo} alt="github logo" />
+			</a>
+		</div></svelte:fragment
+	>
 </AppShell>

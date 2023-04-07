@@ -20,7 +20,9 @@ export const handle: Handle = async ({ event, resolve }) => {
 		return session;
 	};
 
-	if (event.url.pathname.startsWith('/api')) {
+	const openPaths = ['/login', '/signup', '/signout'];
+
+	if (!openPaths.includes(event.url.pathname)) {
 		const session = await event.locals.getSession();
 		if (!session) {
 			throw redirect(303, '/login');
