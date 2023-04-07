@@ -23,11 +23,13 @@ export const POST = (async ({ request }) => {
 
 	let response = await createChatCompletion(completionProps);
 	var assistantMessage = {
+		id: -1, // this is overwritten by the database
 		text: response,
 		role: MessageRole.ASSISTANT,
 		type: 'text',
-		conversationId: conversationId
-	} as Message;
+		conversationId: conversationId,
+		userId: userMessage.userId
+	};
 
 	assistantMessage = await messagesRepository.newMessage(assistantMessage);
 

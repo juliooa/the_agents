@@ -41,6 +41,7 @@
 			role: MessageRole.USER,
 			text: messageToSend,
 			type: 'text',
+			userId: conversation.userId,
 			conversationId: conversation.id
 		};
 
@@ -105,7 +106,8 @@
 			role: MessageRole.ASSISTANT,
 			text: 'typing...',
 			type: 'typing',
-			conversationId: conversation.id
+			conversationId: conversation.id,
+			userId: conversation.userId
 		};
 		let index = messages.push(answerMessage);
 		messages = messages;
@@ -173,7 +175,8 @@
 					name: inputAgentName,
 					systemMessage: systemMessage,
 					model: conversation.model,
-					promptTemplate: promptTemplate
+					promptTemplate: promptTemplate,
+					userId: conversation.userId
 				}
 			} satisfies ConversationPutRequest;
 
@@ -241,7 +244,7 @@
 		<button on:click={saveConversationParams} class="btn variant-filled-secondary mx-3">Save</button
 		>
 	</div>
-	<div class="grow flex flex-col h-[75vh] antialiased pr-4 pl-2 pt-3 bg-surface-800">
+	<div class="grow flex flex-col h-[72vh] antialiased pr-4 pl-2 pt-3 bg-surface-800">
 		<div
 			class="flex flex-col flex-auto overflow-x-auto flex-shrink-0 rounded-t-2xl h-full p-4 bg-surface-600"
 			id="messagesContainer"

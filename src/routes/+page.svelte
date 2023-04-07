@@ -7,8 +7,10 @@
 	import type { DashboardTabsPageData } from './+page.server';
 	import type { ConversationArchivePostRequest } from './api/conversations/archive/+server';
 	import AgentSelectionDashboard from '$lib/components/AgentSelectionDashboard.svelte';
+	import type { PageData } from './$types';
 
 	export let data: DashboardTabsPageData;
+	export let pageData: PageData;
 
 	$: conversations = data.conversations;
 	$: tabSet = data.selectedTab;
@@ -35,7 +37,6 @@
 				let routeToMove = moveToConversation
 					? `?selectedConversationId=${moveToConversation.id}`
 					: '?showNewAgentTab=true';
-				console.log('routeToMove', routeToMove);
 				routeToPage(routeToMove);
 			}
 		} catch (error) {

@@ -66,14 +66,16 @@ export class PrismaDb implements MessagesRepository, ConversationsRepository {
 		name: string,
 		systemMessage: string,
 		model: string,
-		promptTemplate: string
+		promptTemplate: string,
+		userId: string
 	): Promise<Conversation> {
 		const conversation = await prisma.conversation.create({
 			data: {
 				name: name,
 				systemMessage: systemMessage,
 				model: model,
-				promptTemplate: promptTemplate
+				promptTemplate: promptTemplate,
+				userId: userId
 			}
 		});
 		return conversation;
@@ -86,7 +88,8 @@ export class PrismaDb implements MessagesRepository, ConversationsRepository {
 				role: message.role,
 				conversationId: message.conversationId,
 				type: message.type,
-				name: message.name
+				name: message.name,
+				userId: message.userId
 			}
 		});
 		return convertToModelMessages([prismaMessage])[0];
@@ -123,7 +126,8 @@ function convertToModelMessages(prismaMessages: PrismaMessage[]): Message[] {
 			role: getMessageRole(messageDb.role),
 			type: messageDb.type,
 			name: messageDb.name || '',
-			conversationId: messageDb.conversationId
+			conversationId: messageDb.conversationId,
+			userId: messageDb.userId
 		};
 		return message;
 	});

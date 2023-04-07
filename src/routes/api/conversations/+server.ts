@@ -1,18 +1,25 @@
 import type { ConversationsRepository } from '$lib/server/database/conversations_repository';
 import { PrismaDb } from '$lib/server/database/prisma_db';
 import type { Conversation } from '$lib/types';
-import { json, type RequestHandler } from '@sveltejs/kit';
+import { error, json, type RequestHandler } from '@sveltejs/kit';
 
 let conversationsRepository: ConversationsRepository = new PrismaDb();
 
-export const POST = (async ({ request }) => {
+export const POST = (async ({ request, locals }) => {
 	const conversationPostRequest: ConversationPostRequest = await request.json();
 
+	let session = await locals.getSession();
+	if (!session) {
+		throw error(401);
+	}
+
+	session;
 	const newConversation = await conversationsRepository.newConversation(
 		conversationPostRequest.name,
 		conversationPostRequest.systemMessage,
 		conversationPostRequest.model,
-		conversationPostRequest.promptTemplate
+		conversationPostRequest.promptTemplate,
+		session.user.id
 	);
 
 	return json(newConversation);
