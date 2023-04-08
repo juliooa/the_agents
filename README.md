@@ -15,18 +15,19 @@ Backend/Frontend Sveltekit app to have multiple conversations with chatbots. It 
 
 # Features
 
-- [x] Open source
 - [x] Deploy in your own server
 - [x] Safely store your API Key in the server
-- [x] You can also run the server locally in your machine
+- [x] Run locally in your machine
 - [x] Configurable amount of messages to send
 - [x] Configurable system message to guide the assistant
+- [x] Prompt templates: Speed up your questions with predefined templates
+- [x] Prompt template parameters: Add parameters to the template and change them easily for
 - [x] Start agents with predefined system message and prompt templates
 - [x] Save all the messages in your database, continue your conversations later
 - [x] Save the system message and prompt templates of conversations in the database
-- [x] By default uses sqlite, but you can easily change the database to whatever you want, just code it
-- [x] Prompt templates: Speed up your questions with predefined templates
-- [x] Prompt template parameters: Add parameters to the template and change them easily for your needs.
+- [x] You can easily change the database provider to whatever you want
+- [x] Auth system
+      your needs.
 - [ ] Streaming messages
 - [ ] Edit messages
 - [ ] Create images with Dall-e
@@ -38,7 +39,15 @@ Backend/Frontend Sveltekit app to have multiple conversations with chatbots. It 
 
 # Setup
 
-- Create a `.env` file with your OpenAI Api key, and the name of the prisma database, see `.env.example`. Your file should look like this:
+- Create a `.env` file with your OpenAI Api key, and the urls of your postgres databases. See `.env.supabase.example` for reference. Your file should look like this:
+
+```
+SECRET_OPENAI_API_KEY="sk-XXXX"
+DIRECT_URL="postgres://postgres:[YOUR_PASSWORD]@project.supabase.co:5432/postgres?connect_timeout=300"
+DATABASE_URL="postgres://postgres:[YOUR_PASSWORD]@project.supabase.co:6543/postgres?pgbouncer=true"
+```
+
+If you want to use sqlite for a local database, check `.env.sqlite.example`, your file should look like this:
 
 ```
 SECRET_OPENAI_API_KEY="sk-XXXXXXXX"
@@ -51,9 +60,9 @@ DATABASE_URL="file:./database_name.db"
 
 # Deploy
 
-If you want to deploy in your own server, don't forget to add the environment variables.
+Add the environment variables to your system.
 
-For serverless(e.g. Vercel) you can use Supabase as database, check the [supabase_db](https://github.com/juliooa/the_agents/tree/supabase_db) branch, and [this](https://supabase.com/docs/guides/integrations/prisma) documentation.
+For serverless(e.g. Vercel) you can use Supabase as database, check [this](https://supabase.com/docs/guides/integrations/prisma) documentation.
 
 # Screenshots
 
