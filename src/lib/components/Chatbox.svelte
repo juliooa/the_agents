@@ -99,7 +99,8 @@
 				const alert: ModalSettings = {
 					type: 'alert',
 					title: 'Messages limit reached',
-					body: 'Oh no! You have reached your limit of messages in your free plan. Please, upgrade. (Soon you will be able to upgrade)'
+					body: 'Oh no! You have reached your limit of messages in your free plan. Please, upgrade. (Soon you will be able to upgrade)',
+					modalClasses: '!bg-primary-800'
 				};
 				modalStore.trigger(alert);
 			} else {
