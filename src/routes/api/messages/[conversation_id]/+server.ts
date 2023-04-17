@@ -2,12 +2,17 @@ import type { MessagesRepository } from '$lib/server/database/messages_repositor
 import { PrismaDb } from '$lib/server/database/prisma_db';
 import { createChatCompletion, type ChatCompletionProps } from '$lib/server/openai_client';
 import { MessageRole, type Message } from '$lib/types';
-import { json, type RequestHandler } from '@sveltejs/kit';
+import { error, json, type RequestHandler } from '@sveltejs/kit';
 
 let messagesRepository: MessagesRepository = new PrismaDb();
 
 export const POST = (async ({ request }) => {
 	const messagePostRequest: MessagePostRequest = await request.json();
+
+	let messagesLimit = await messagesRepository.getMessagesLimit(messagePostRequest.message.user_id);
+	if (messagesLimit.messagesSent >= messagesLimit.messagesLimit) {
+		throw error(400, "You've reached your limit of messages");
+	}
 
 	let userMessage = await messagesRepository.newMessage(messagePostRequest.message, 0);
 	let conversationId = userMessage.conversationId;

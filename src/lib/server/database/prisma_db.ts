@@ -2,11 +2,30 @@ import { type Message, type Conversation, MessageRole } from '$lib/types';
 import { PrismaClient } from '@prisma/client';
 import type { Message as PrismaMessage } from '@prisma/client';
 import type { ConversationsRepository } from './conversations_repository';
-import type { MessagesRepository } from './messages_repository';
+import type { MessageLimitResponse, MessagesRepository } from './messages_repository';
+import { createClient } from '@supabase/supabase-js';
+import { PUBLIC_SUPABASE_ANON_KEY, PUBLIC_SUPABASE_URL } from '$env/static/public';
 
 const prisma = new PrismaClient();
 
 export class PrismaDb implements MessagesRepository, ConversationsRepository {
+	async getMessagesLimit(userId: string): Promise<MessageLimitResponse> {
+		const supabase = createClient(PUBLIC_SUPABASE_URL, PUBLIC_SUPABASE_ANON_KEY);
+		let response = await supabase
+			.from('profiles')
+			.select('messages_limit, messages_sent')
+			.eq('id', userId);
+
+		if (response.error) {
+			throw new Error(response.error.message);
+		}
+		console.log(response);
+		return {
+			messagesSent: response.data[0].messages_sent,
+			messagesLimit: response.data[0].messages_limit
+		};
+	}
+
 	async archiveConversation(conversationId: number): Promise<Conversation> {
 		let archivedConversation = await prisma.conversation.update({
 			where: {

@@ -10,6 +10,9 @@
 	} from '../../routes/api/messages/[conversation_id]/+server';
 	import type { ConversationPutRequest } from '../../routes/api/conversations/+server';
 	import { generateRandomId } from '$lib/utils';
+	import { Modal, modalStore } from '@skeletonlabs/skeleton';
+	import type { ModalSettings, ModalComponent } from '@skeletonlabs/skeleton';
+
 	export let conversation: Conversation;
 	let inputTextMessage: string = '';
 	let systemMessage = conversation.systemMessage;
@@ -91,10 +94,20 @@
 				method: 'POST',
 				body: JSON.stringify(request)
 			});
-			const messagePostResponse = (await response.json()) satisfies MessagePostResponse;
-			messages[index - 1] = messagePostResponse;
-			messages = messages;
-			triggerScrollDown();
+			if (response.status == 400) {
+				deleteLastTwoMessages();
+				const alert: ModalSettings = {
+					type: 'alert',
+					title: 'Messages limit reached',
+					body: 'Oh no! You have reached your limit of messages in your free plan. Please, upgrade. (Soon you will be able to upgrade)'
+				};
+				modalStore.trigger(alert);
+			} else {
+				const messagePostResponse = (await response.json()) satisfies MessagePostResponse;
+				messages[index - 1] = messagePostResponse;
+				messages = messages;
+				triggerScrollDown();
+			}
 		} catch (error) {
 			console.log(error);
 		}
@@ -190,6 +203,11 @@
 			console.log("Couldn't create new conversation");
 			console.log(error);
 		}
+	}
+
+	function deleteLastTwoMessages() {
+		messages.splice(-2);
+		messages = messages;
 	}
 </script>
 

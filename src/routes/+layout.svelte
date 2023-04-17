@@ -8,7 +8,7 @@
 	import type { LayoutData } from './$types';
 
 	import 'iconify-icon';
-	import { AppBar, AppShell } from '@skeletonlabs/skeleton';
+	import { AppBar, AppShell, Modal } from '@skeletonlabs/skeleton';
 	import 'highlight.js/styles/github-dark.css';
 
 	import hljs from 'highlight.js';
@@ -53,6 +53,7 @@
 	};
 </script>
 
+<Modal />
 <AppShell>
 	<svelte:fragment slot="pageHeader">
 		<AppBar>
