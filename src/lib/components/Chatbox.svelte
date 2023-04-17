@@ -41,7 +41,7 @@
 			role: MessageRole.USER,
 			text: messageToSend,
 			type: 'text',
-			userId: conversation.userId,
+			user_id: conversation.user_id,
 			conversationId: conversation.id
 		};
 
@@ -107,7 +107,7 @@
 			text: 'typing...',
 			type: 'typing',
 			conversationId: conversation.id,
-			userId: conversation.userId
+			user_id: conversation.user_id
 		};
 		let index = messages.push(answerMessage);
 		messages = messages;
@@ -176,7 +176,7 @@
 					systemMessage: systemMessage,
 					model: conversation.model,
 					promptTemplate: promptTemplate,
-					userId: conversation.userId
+					user_id: conversation.user_id
 				}
 			} satisfies ConversationPutRequest;
 

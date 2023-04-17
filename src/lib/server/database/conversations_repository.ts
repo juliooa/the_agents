@@ -1,7 +1,7 @@
 import type { Conversation } from '../../types';
 
 export interface ConversationsRepository {
-	getAllConversations(): Promise<Conversation[]>;
+	getAllConversations(userId: string): Promise<Conversation[]>;
 	getConversation(conversationId: number): Promise<Conversation>;
 	updateConversation(conversation: Conversation): Promise<Conversation>;
 	removeConversation(conversationId: number): boolean;

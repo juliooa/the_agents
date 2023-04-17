@@ -22,7 +22,14 @@ export type ChatCompletionProps = {
 	messages: Message[];
 };
 
-export async function createChatCompletion(props: ChatCompletionProps): Promise<string> {
+type ChatCompletionResponse = {
+	content: string;
+	tokens: number;
+};
+
+export async function createChatCompletion(
+	props: ChatCompletionProps
+): Promise<ChatCompletionResponse | null> {
 	let openAiMessages = props.messages.map((message) => {
 		return {
 			role: message.role,
@@ -47,9 +54,12 @@ export async function createChatCompletion(props: ChatCompletionProps): Promise<
 
 		//FIXME error handling missing
 		if (response.data.choices.length > 0) {
-			return response.data.choices[0].message!.content;
+			return {
+				content: response.data.choices[0].message!.content,
+				tokens: response.data.usage!.total_tokens
+			} satisfies ChatCompletionResponse;
 		} else {
-			return '';
+			return null;
 		}
 	} catch (error: any) {
 		if (error.response) {
@@ -58,6 +68,6 @@ export async function createChatCompletion(props: ChatCompletionProps): Promise<
 		} else {
 			console.log(error.message);
 		}
-		return '';
+		return null;
 	}
 }

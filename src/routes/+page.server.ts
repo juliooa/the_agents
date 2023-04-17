@@ -2,16 +2,21 @@ import { SECRET_OPENAI_API_KEY } from '$env/static/private';
 import type { ConversationsRepository } from '$lib/server/database/conversations_repository';
 import { PrismaDb } from '$lib/server/database/prisma_db';
 import type { Conversation } from '$lib/types';
+import { error } from '@sveltejs/kit';
 import type { PageServerLoad } from './$types';
 
 let conversationsRepository: ConversationsRepository = new PrismaDb();
 
-export const load: PageServerLoad = async ({ url }) => {
+export const load: PageServerLoad = async ({ url, locals }) => {
 	let apiKeyPresent = SECRET_OPENAI_API_KEY !== undefined;
 	const selectedConversationId = url.searchParams.get('selectedConversationId');
 	const showNewAgentTab = Boolean(url.searchParams.get('showNewAgentTab'));
 
-	let conversations = await conversationsRepository.getAllConversations();
+	let session = await locals.getSession();
+	if (session == null) {
+		throw error(401);
+	}
+	let conversations = await conversationsRepository.getAllConversations(session?.user.id);
 	if (conversations.length === 0) {
 		return {
 			nroTabs: 1,

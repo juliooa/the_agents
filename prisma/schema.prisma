@@ -17,7 +17,7 @@ model Conversation {
   systemMessage  String
   promptTemplate String
   model          String
-  userId         String
+  user_id        String
   archived       Boolean   @default(false)
   messages       Message[]
 }
@@ -30,6 +30,7 @@ model Message {
   type           String
   name           String?
   conversationId Int
-  userId         String
+  user_id        String
+  tokens         Int          @default(0)
   Conversation   Conversation @relation(fields: [conversationId], references: [id])
 }

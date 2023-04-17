@@ -13,7 +13,7 @@ export type Message = {
 	type: string;
 	name?: string;
 	conversationId: number;
-	userId: string;
+	user_id: string;
 };
 
 export type Conversation = {
@@ -22,7 +22,7 @@ export type Conversation = {
 	systemMessage: string;
 	model: string;
 	promptTemplate: string;
-	userId: string;
+	user_id: string;
 };
 
 export type Agent = {

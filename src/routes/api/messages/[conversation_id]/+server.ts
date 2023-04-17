@@ -9,7 +9,7 @@ let messagesRepository: MessagesRepository = new PrismaDb();
 export const POST = (async ({ request }) => {
 	const messagePostRequest: MessagePostRequest = await request.json();
 
-	let userMessage = await messagesRepository.newMessage(messagePostRequest.message);
+	let userMessage = await messagesRepository.newMessage(messagePostRequest.message, 0);
 	let conversationId = userMessage.conversationId;
 	let messages = await messagesRepository.getLastMessagesFromConversation(conversationId, 10);
 
@@ -22,18 +22,21 @@ export const POST = (async ({ request }) => {
 	} satisfies ChatCompletionProps;
 
 	let response = await createChatCompletion(completionProps);
-	var assistantMessage = {
-		id: -1, // this is overwritten by the database
-		text: response,
-		role: MessageRole.ASSISTANT,
-		type: 'text',
-		conversationId: conversationId,
-		userId: userMessage.userId
-	};
+	if (response != null) {
+		var assistantMessage = {
+			id: -1, // this is overwritten by the database
+			text: response.content,
+			role: MessageRole.ASSISTANT,
+			type: 'text',
+			conversationId: conversationId,
+			user_id: userMessage.user_id
+		} as Message;
 
-	assistantMessage = await messagesRepository.newMessage(assistantMessage);
+		assistantMessage = await messagesRepository.newMessage(assistantMessage, response.tokens);
 
-	return json(assistantMessage);
+		return json(assistantMessage);
+	}
+	throw new Error('Error creating the chat completion request');
 }) satisfies RequestHandler;
 
 export const GET = (async ({ params }) => {

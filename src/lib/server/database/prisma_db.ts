@@ -34,10 +34,11 @@ export class PrismaDb implements MessagesRepository, ConversationsRepository {
 		return convertToModelMessages(prismaMessages);
 	}
 
-	async getAllConversations(): Promise<Conversation[]> {
+	async getAllConversations(userId: string): Promise<Conversation[]> {
 		const conversations = await prisma.conversation.findMany({
 			where: {
-				archived: false
+				archived: false,
+				user_id: userId
 			}
 		});
 		return conversations;
@@ -75,13 +76,13 @@ export class PrismaDb implements MessagesRepository, ConversationsRepository {
 				systemMessage: systemMessage,
 				model: model,
 				promptTemplate: promptTemplate,
-				userId: userId
+				user_id: userId
 			}
 		});
 		return conversation;
 	}
 
-	async newMessage(message: Message): Promise<Message> {
+	async newMessage(message: Message, tokens: number): Promise<Message> {
 		let prismaMessage = await prisma.message.create({
 			data: {
 				text: message.text,
@@ -89,7 +90,8 @@ export class PrismaDb implements MessagesRepository, ConversationsRepository {
 				conversationId: message.conversationId,
 				type: message.type,
 				name: message.name,
-				userId: message.userId
+				user_id: message.user_id,
+				tokens: tokens
 			}
 		});
 		return convertToModelMessages([prismaMessage])[0];
@@ -127,7 +129,7 @@ function convertToModelMessages(prismaMessages: PrismaMessage[]): Message[] {
 			type: messageDb.type,
 			name: messageDb.name || '',
 			conversationId: messageDb.conversationId,
-			userId: messageDb.userId
+			user_id: messageDb.user_id
 		};
 		return message;
 	});
